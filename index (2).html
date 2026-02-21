@@ -1,0 +1,1369 @@
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Sirojul Wahji | Web Developer Premium</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ANIMASI BACKGROUND */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* CUSTOM CURSOR */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffd700;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.2s ease;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        /* LOADING SCREEN */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: #ffd700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 60px;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translate(-50%, -100%); }
+            to { transform: translate(-50%, 0); }
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #333;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(255,215,0,0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255,215,0,0.4);
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+            position: relative;
+        }
+
+        /* FLOATING ELEMENTS */
+        .floating-shape {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 0;
+            animation: float 10s infinite alternate;
+        }
+
+        .shape1 {
+            top: 10%;
+            left: 10%;
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .shape2 {
+            bottom: 10%;
+            right: 10%;
+            background: rgba(255, 105, 180, 0.2);
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 100px) scale(1.2); }
+        }
+
+        /* HERO SECTION */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+            color: #ffd700;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-title span {
+            display: block;
+            font-size: 3rem;
+            color: #fff;
+            -webkit-text-fill-color: #fff;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffd700;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #333;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255,215,0,0.4);
+        }
+
+        .btn-outline {
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: #ffd700;
+            color: #333;
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: floatImage 6s ease-in-out infinite;
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            border: 4px solid rgba(255,255,255,0.2);
+        }
+
+        /* SECTION HEADER */
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* SERVICES SECTION */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 40px 30px;
+            transition: all 0.4s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #ffd700;
+            box-shadow: 0 30px 60px rgba(255,215,0,0.2);
+        }
+
+        .service-icon {
+            font-size: 4rem;
+            margin-bottom: 25px;
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+
+        .service-card p {
+            color: rgba(255,255,255,0.9);
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .service-features {
+            list-style: none;
+        }
+
+        .service-features li {
+            padding: 10px 0;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .service-features li::before {
+            content: '✓';
+            color: #ffd700;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .service-price {
+            margin-top: 25px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .service-price small {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* PORTFOLIO SECTION */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            border-color: #ffd700;
+            box-shadow: 0 30px 60px rgba(255,215,0,0.2);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .portfolio-card:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-content {
+            padding: 30px;
+        }
+
+        .portfolio-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255,215,0,0.2);
+            color: #ffd700;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-content h3 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .portfolio-content p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.7;
+        }
+
+        /* TESTIMONIALS */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            border-color: #ffd700;
+            transform: translateY(-5px);
+        }
+
+        .testimonial-rating {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            color: #fff;
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+        }
+
+        /* PROCESS SECTION */
+        .process-section {
+            background: rgba(0,0,0,0.2);
+            border-radius: 60px;
+            padding: 60px;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: rgba(255,215,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        .process-step h3 {
+            font-size: 1.3rem;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .process-step p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* FAQ SECTION */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-item {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 30px;
+        }
+
+        .faq-item h3 {
+            font-size: 1.2rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .faq-item p {
+            color: #fff;
+            line-height: 1.7;
+        }
+
+        /* CONTACT SECTION - DENGAN INTEGRASI WA */
+        .contact-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 60px;
+            padding: 60px;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-info h3 {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .contact-info h3 span {
+            color: #ffd700;
+        }
+
+        .contact-info p {
+            color: rgba(255,255,255,0.9);
+            line-height: 1.8;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,215,0,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #ffd700;
+        }
+
+        .contact-text h4 {
+            color: #ffd700;
+            margin-bottom: 5px;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .contact-text p {
+            color: #fff;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .contact-wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .contact-wa-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(37, 211, 102, 0.3);
+        }
+
+        /* FORM DENGAN WHATSAPP INTEGRATION */
+        .contact-form {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ffd700;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .form-group select option {
+            background: #764ba2;
+            color: #fff;
+        }
+
+        .form-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #333;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .form-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255,215,0,0.3);
+        }
+
+        /* FLOATING WHATSAPP BUTTON */
+        .floating-wa {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+        }
+
+        .wa-float {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            color: white;
+            font-size: 2rem;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            animation: pulse 2s infinite;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); }
+            50% { transform: scale(1.1); box-shadow: 0 20px 50px rgba(37, 211, 102, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); }
+        }
+
+        /* FOOTER */
+        footer {
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(20px);
+            border-radius: 60px 60px 0 0;
+            padding: 60px 20px 20px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .footer-about p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+        }
+
+        .footer-links h4 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links a {
+            display: block;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ffd700;
+        }
+
+        .footer-newsletter p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+        }
+
+        .newsletter-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-input input {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            color: #fff;
+        }
+
+        .newsletter-input button {
+            padding: 12px 20px;
+            background: #ffd700;
+            color: #333;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .services-grid,
+            .testimonials-grid,
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 20px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+            .hero-cta {
+                justify-content: center;
+            }
+            .services-grid,
+            .testimonials-grid,
+            .process-grid,
+            .portfolio-grid,
+            .faq-grid,
+            .contact-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .process-section {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor"></div>
+
+    <!-- LOADER -->
+    <div class="loader" id="loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <div class="floating-wa">
+        <a href="https://wa.me/6285870222696?text=Halo%20Muhammad%2C%20saya%20tertarik%20dengan%20jasa%20website%20Anda.%20Bisa%20konsultasi%3F" class="wa-float" target="_blank">
+            📞
+        </a>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">M.SirojulW</a>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#services">Layanan</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#testimonials">Testimoni</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Kontak</a>
+        </div>
+        <a href="#contact" class="nav-cta">✨ Konsultasi Gratis</a>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        <!-- FLOATING SHAPES -->
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+
+        <!-- HERO SECTION -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">WEB TERPECAYA🔥</div>
+                <h1 class="hero-title">
+                    Muhammad Sirojul Wahji
+                    <span>Web Developer & Digital Architect</span>
+                </h1>
+                <p class="hero-description">
+                    Saya bantu Anda punya website profesional, toko online siap jualan, 
+                    atau portfolio keren yang bikin bisnis Anda naik kelas.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">30+</div>
+                        <div class="stat-label">Proyek Selesai</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Klien Puas</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Tepat Waktu</div>
+                    </div>
+                </div>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn-primary">🚀 Konsultasi Gratis</a>
+                    <a href="https://wa.me/6285870222696?text=Halo%20Muhammad%2C%20saya%20lihat%20portofolio%20Anda.%20Boleh%20minta%20info%20lebih%20lanjut%3F" class="btn-outline" target="_blank">📞 Chat WA</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                     alt="Web Developer Portfolio">
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section id="services">
+            <div class="section-header">
+                <div class="section-subtitle">✨ LAYANAN SAYA</div>
+                <h2 class="section-title">Solusi Website <span>Profesional</span> untuk Anda</h2>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📄</div>
+                    <h3>Company Profile</h3>
+                    <p>Website profesional untuk bisnis atau perusahaan. Tampil kredibel dan meyakinkan calon klien.</p>
+                    <ul class="service-features">
+                        <li>Desain custom premium</li>
+                        <li>5-10 halaman</li>
+                        <li>Form kontak & maps</li>
+                        <li>SEO dasar</li>
+                    </ul>
+                    <div class="service-price">Rp 1,5Jt <small>/mulai</small></div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🛒</div>
+                    <h3>Toko Online</h3>
+                    <p>Website e-commerce siap jualan dengan sistem pembayaran dan manajemen produk mudah.</p>
+                    <ul class="service-features">
+                        <li>Katalog produk</li>
+                        <li>Keranjang belanja</li>
+                        <li>Payment gateway</li>
+                        <li>Dashboard admin</li>
+                    </ul>
+                    <div class="service-price">Rp 2,5Jt <small>/mulai</small></div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">👤</div>
+                    <h3>Portfolio Pribadi</h3>
+                    <p>Tampilkan karya terbaik Anda dengan website portfolio yang elegan dan modern.</p>
+                    <ul class="service-features">
+                        <li>Desain eksklusif</li>
+                        <li>Gallery project</li>
+                        <li>Testimoni section</li>
+                        <li>Contact form</li>
+                    </ul>
+                    <div class="service-price">Rp 1,2Jt <small>/mulai</small></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO SECTION -->
+        <section id="portfolio">
+            <div class="section-header">
+                <div class="section-subtitle">📸 PORTFOLIO</div>
+                <h2 class="section-title">Hasil <span>Karya</span> Terbaru</h2>
+            </div>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Toko Online">
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">🛒 E-COMMERCE</span>
+                        <h3>Toko Fashion Muslimah</h3>
+                        <p>Website toko online dengan fitur lengkap. Berhasil meningkatkan penjualan 150% dalam 3 bulan.</p>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Company Profile">
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">🏢 COMPANY PROFILE</span>
+                        <h3>Jasa Konsultan Bisnis</h3>
+                        <p>Website profesional yang meningkatkan kepercayaan klien. Inquiry naik 80% setelah launching.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS SECTION -->
+        <section id="testimonials">
+            <div class="section-header">
+                <div class="section-subtitle">💬 TESTIMONI</div>
+                <h2 class="section-title">Apa Kata <span>Klien</span> Saya</h2>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">"Alhamdulillah, toko online saya jadi lebih laris. Desainnya keren, pelayanannya cepat, dan yang penting ramah di kantong."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RN</div>
+                        <div class="author-info">
+                            <h4>Rina Nurhayati</h4>
+                            <p>Owner - Fashion Muslimah</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">"Prosesnya cepat dan hasilnya memuaskan. Saya jadi punya website portfolio yang bikin klien internasional tertarik."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AF</div>
+                        <div class="author-info">
+                            <h4>Andi Firmansyah</h4>
+                            <p>Desainer Grafis</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">"Website company profile kami sekarang keliatan mahal banget! Banyak klien yang komen keren."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SW</div>
+                        <div class="author-info">
+                            <h4>Siti Wahyuni</h4>
+                            <p>Owner - Catering UMKM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROCESS SECTION -->
+        <section class="process-section">
+            <div class="section-header">
+                <div class="section-subtitle">⚡ CARA KERJA</div>
+                <h2 class="section-title">Gampang, Cepat, <span>Anti Ribet</span></h2>
+            </div>
+
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <h3>Konsultasi</h3>
+                    <p>Diskusi kebutuhan, tujuan, dan budget yang cocok.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <h3>Desain & Revisi</h3>
+                    <p>Saya buat desain, Anda lihat dan revisi sampai cocok.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <h3>Development</h3>
+                    <p>Desain fix diubah jadi website fungsional.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">04</div>
+                    <h3>Launch & Support</h3>
+                    <p>Website online plus support 30 hari.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section id="faq">
+            <div class="section-header">
+                <div class="section-subtitle">❓ FAQ</div>
+                <h2 class="section-title">Pertanyaan <span>Frequently Asked</span></h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Bayarnya gimana?</h3>
+                    <p>DP 50% mulai, 50% setelah selesai dan Anda setuju.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Apakah website bisa diurus sendiri?</h3>
+                    <p>Bisa! Saya kasih akses dan tutorial cara update konten.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Berapa lama prosesnya?</h3>
+                    <p>Website standar 1-2 minggu, toko online 2-3 minggu.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Ada garansi?</h3>
+                    <p>Garansi 30 hari setelah launch. Bug gratis, fitur tambahan diskon.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION - DENGAN FORM WHATSAPP -->
+        <section id="contact" class="contact-section">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Yuk, <span>Diskusi Dulu!</span></h3>
+                    <p>Isi form atau hubungi langsung. Saya balas cepat kok, biasanya dalam 1-2 jam. Konsultasi gratis, tanpa kewajiban.</p>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-text">
+                            <h4>Email</h4>
+                            <p>ajikzz369@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-text">
+                            <h4>WhatsApp</h4>
+                            <p>+62 858-7022-2696</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">⏰</div>
+                        <div class="contact-text">
+                            <h4>Respon Cepat</h4>
+                            <p>Biasanya 1-2 jam kerja</p>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/6285870222696?text=Halo%20Muhammad%2C%20saya%20tertarik%20dengan%20jasa%20website%20Anda.%20Bisa%20konsultasi%20gratis%3F" 
+                       class="contact-wa-btn" target="_blank">
+                        📱 Langsung Chat WhatsApp
+                    </a>
+                </div>
+                
+                <div class="contact-form">
+                    <h3 style="color: #ffd700; margin-bottom: 30px; font-size: 1.8rem;">Kirim Pesan</h3>
+                    <form id="waForm" onsubmit="sendToWhatsApp(event)">
+                        <div class="form-group">
+                            <input type="text" id="nama" placeholder="Nama Lengkap" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Email" value="ajikzz369@gmail.com">
+                        </div>
+                        <div class="form-group">
+                            <select id="layanan">
+                                <option value="">Pilih Layanan</option>
+                                <option value="Company Profile">Company Profile</option>
+                                <option value="Toko Online">Toko Online</option>
+                                <option value="Portfolio Pribadi">Portfolio Pribadi</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="pesan" rows="4" placeholder="Ceritakan kebutuhan Anda..."></textarea>
+                        </div>
+                        <button type="submit" class="form-btn">
+                            <span>📱</span> Kirim ke WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-about">
+                <div class="footer-logo">M.SirojulW</div>
+                <p>Web Developer yang bantu bisnis dan profesional tampil beda dengan website premium. Fokus pada kualitas, kecepatan, dan kepuasan klien.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Layanan</h4>
+                <a href="#">Company Profile</a>
+                <a href="#">Toko Online</a>
+                <a href="#">Portfolio Pribadi</a>
+            </div>
+            <div class="footer-links">
+                <h4>Navigasi</h4>
+                <a href="#home">Home</a>
+                <a href="#services">Layanan</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#contact">Kontak</a>
+            </div>
+            <div class="footer-newsletter">
+                <h4>Newsletter</h4>
+                <p>Dapatkan tips website dan promo spesial</p>
+                <div class="newsletter-input">
+                    <input type="email" placeholder="Email Anda">
+                    <button>→</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Muhammad Sirojul Wahji. Semua Hak Dilindungi. Dibuat dengan ❤️ untuk klien.</p>
+        </div>
+    </footer>
+
+    <script>
+        // CURSOR
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // LOADER
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1000);
+        });
+
+        // NAVBAR SCROLL
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.25)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.15)';
+            }
+        });
+
+        // SMOOTH SCROLL
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // FORM WHATSAPP INTEGRATION
+        function sendToWhatsApp(event) {
+            event.preventDefault();
+            
+            // Ambil data form
+            const nama = document.getElementById('nama').value;
+            const email = document.getElementById('email').value;
+            const layanan = document.getElementById('layanan').value;
+            const pesan = document.getElementById('pesan').value;
+            
+            // Nomor WhatsApp tujuan (YANG SUDAH DIGANTI)
+            const nomorWA = "6285870222696"; // Nomor kamu tanpa + dan tanpa spasi
+            
+            // Format pesan yang akan dikirim
+            const teks = `Halo Muhammad Sirojul Wahji,%0a%0a` +
+                         `Saya *${nama}* tertarik dengan jasa website Anda.%0a%0a` +
+                         `📧 Email: ${email}%0a` +
+                         `📋 Layanan: ${layanan}%0a` +
+                         `💬 Pesan: ${pesan}%0a%0a` +
+                         `Mohon infonya lebih lanjut. Terima kasih!`;
+            
+            // Buka WhatsApp dengan pesan terisi otomatis
+            window.open(`https://wa.me/${nomorWA}?text=${teks}`, '_blank');
+        }
+    </script>
+</body>
+</html>Web Developer & Digital Architect
